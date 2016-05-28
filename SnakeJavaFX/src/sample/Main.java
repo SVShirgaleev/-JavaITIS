@@ -1,16 +1,26 @@
 package sample;
 
+import javafx.animation.Animation;
+import javafx.animation.FillTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -119,6 +129,23 @@ public class Main extends Application {
         timeline.getKeyFrames().add(frame);
         timeline.setCycleCount(Timeline.INDEFINITE);
         root.getChildren().addAll(food, snakeBody);
+
+
+
+        //Pane pane  = new Pane();
+        Image image=new Image(getClass().getResourceAsStream("snake_skin_01.jpg"));
+        ImageView view = new ImageView(image);
+        view.setFitHeight(600);
+        view.setFitWidth(800);
+        root.getChildren().add(view);
+
+        MenuItem newGame = new MenuItem("НОВАЯ ИГРА");
+        MenuItem settings = new MenuItem("НАСТРОЙКИ");
+        MenuItem records = new MenuItem("РЕКОРДЫ");
+        SubMenu mainMenu = new SubMenu(newGame,settings,records);
+        MenuBox menuBox = new MenuBox(mainMenu);
+        newGame.setOnMouseClicked(event -> startGame());
+        root.getChildren().addAll(menuBox);
         return root;
     }
 
@@ -184,10 +211,107 @@ public class Main extends Application {
             }
             moved = false;
         });
+        
+
+
+
+      /*  Pane pane  = new Pane();
+        Image image=new Image(getClass().getResourceAsStream("snake_skin_01.jpg"));
+        ImageView view = new ImageView(image);
+        view.setFitHeight(800);
+        view.setFitHeight(600);
+
+        MenuItem newGame = new MenuItem("НОВАЯ ИГРА");
+        MenuItem settings = new MenuItem("НАСТРОЙКИ");
+        MenuItem records = new MenuItem("РЕКОРДЫ");
+        SubMenu mainMenu = new SubMenu(newGame,settings,records);
+        MenuBox menuBox = new MenuBox(mainMenu);
+        pane.getChildren().addAll(menuBox);
+
+
+        newGame.setOnMouseClicked(event -> startGame());
+
+
+*/
+
+
+
+
+        //pane.getChildren().add(view);
         primaryStage.setTitle("Slither");
         primaryStage.setScene(scene);
         primaryStage.show();
-        startGame();
+        //startGame();
+    }
+
+    private class MenuItem extends StackPane{
+        public MenuItem(String name){
+            Rectangle rectangle= new Rectangle(200,20,Color.WHITE);
+            rectangle.setOpacity(0.5);
+            Text text =new Text(name);
+            text.setFill(Color.WHITE);
+            text.setFont(Font.font("Helvetica", FontWeight.BOLD,11));
+
+            this.setAlignment(Pos.CENTER);
+            getChildren().addAll(rectangle,text);
+
+            FillTransition fillTransition = new FillTransition(Duration.seconds( 0.1),rectangle);
+
+            setOnMouseEntered(event -> {
+                fillTransition.setFromValue(Color.AZURE);
+                fillTransition.setToValue(Color.GREY);
+                fillTransition.setCycleCount(Animation.INDEFINITE);
+                fillTransition.setAutoReverse(true);
+
+                fillTransition.play();
+
+
+            });
+
+
+            setOnMouseExited(event -> {
+                fillTransition.stop();
+                rectangle.setFill(Color.WHITE);
+            });
+        }
+
+
+    }
+
+
+
+    private static class SubMenu extends VBox{
+        public SubMenu(MenuItem...item){
+            this.setSpacing(15);
+            setTranslateX(100);
+            setTranslateY(50);
+            for(MenuItem m:item){
+
+                getChildren().addAll(m);
+            }
+        }
+    }
+
+
+
+    public static class MenuBox extends Pane{
+        static SubMenu subMenu;
+        public MenuBox(SubMenu subMenu){
+
+            MenuBox.subMenu = subMenu;
+            setVisible(false);
+
+            Rectangle rectangle=new Rectangle (800,600,Color.BLUE);
+            rectangle.setOpacity(0.5);
+            getChildren().addAll(subMenu,rectangle);
+        }
+
+        public void setSubMenu(SubMenu subMenu){
+            getChildren().remove(MenuBox.subMenu);
+            MenuBox.subMenu=subMenu;
+            getChildren().add(MenuBox.subMenu);
+        }
+
     }
 
 
