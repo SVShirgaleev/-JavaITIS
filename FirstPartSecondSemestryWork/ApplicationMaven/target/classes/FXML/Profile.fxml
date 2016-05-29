@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.Pane?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.25" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="Controllers.ProfileController">
+    <children>
+        <MenuBar prefHeight="29.0" prefWidth="600.0">
+            <menus>
+                <Menu id="MenuButton" mnemonicParsing="false" text="Menu">
+                    <MenuItem onAction="#toShop" text="Shop"/>
+                    <MenuItem onAction="#update" text="Profile"/>
+                    <MenuItem onAction="#Logout" text="Logout"/>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <TextField fx:id="userNameLabel" editable="false" layoutX="217.0" layoutY="132.0" text="Name"/>
+        <Label fx:id="errorName" layoutX="390" layoutY="129.0" prefHeight="17.0" prefWidth="100"
+               text="Error" visible="false" textFill="red"/>
+
+        <TextField fx:id="userSurnameLabel" editable="false" layoutX="217.0" layoutY="173.0" text="Surname"/>
+        <Label fx:id="errorSurname" layoutX="390" layoutY="170.0" prefHeight="17.0" prefWidth="100"
+               text="Error" visible="false" textFill="red"/>
+
+        <TextField fx:id="userLoginLabel" editable="false" layoutX="217.0" layoutY="209.0" text="login"/>
+        <Label fx:id="erroLogin" layoutX="390" layoutY="206.0" prefHeight="17.0" prefWidth="100"
+               text="Error" visible="false" textFill="red"/>
+
+        <Button fx:id="editButton" layoutX="271.0" layoutY="244.0" mnemonicParsing="false" text="Edit"
+                onAction="#Edit"/>
+    </children>
+</Pane>
